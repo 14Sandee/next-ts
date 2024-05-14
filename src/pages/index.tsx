@@ -1,18 +1,14 @@
 import Head from "next/head";
 import { Posts, User } from "@/types";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { PostComponent } from "@/components/Features/PostComponent";
 import { PostListSkeleton } from "@/components/Skeleton";
-import { useAxiosGet } from "@/hooks/AxiosHooks";
 import { useUserQuery } from "@/hooks/UserQueries";
 import { usePostQuery } from "@/hooks/PostQueries";
 import { useEffect, useMemo } from "react";
 import { userMapStore } from "@/hooks/userMapStore";
 
 export default function Home() {
-
-  // const { data: posts, isLoading } = useAxiosGet<Posts[]>(['posts'], 'https://jsonplaceholder.typicode.com/posts')
-  // const { data: users } = useAxiosGet<User[]>(['users'], 'https://jsonplaceholder.typicode.com/users')
 
   const { data: posts, isLoading } = usePostQuery<Posts[]>();
   const { data: users, error } = useUserQuery<User[]>();

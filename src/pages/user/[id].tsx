@@ -1,7 +1,4 @@
-import { UserSkeleton } from '@/components/Skeleton';
-import { useUserQuery } from '@/hooks/UserQueries';
 import { userMapStore } from '@/hooks/userMapStore';
-import { User } from '@/types';
 import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React from 'react'
@@ -9,14 +6,8 @@ import React from 'react'
 const ViewUser = () => {
     const router = useRouter();
     const id = router.query.id;
-    // const { data: user, isLoading } = useUserQuery<User>(Number(id));
     const { user: data } = userMapStore();
     let user = data?.get(Number(id))
-    // const { data: user, isLoading, error } = useQuery<User>({
-    //     queryKey: ['users', id],
-    //     queryFn: () => axios.get(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => res.data),
-    //     enabled: !!id
-    // })
 
     return (
         <>

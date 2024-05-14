@@ -1,19 +1,17 @@
-import { Posts, User } from '@/types';
+import { Posts } from '@/types';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { ViewPostSkeleton } from '@/components/Skeleton';
-import { useUserQuery } from '@/hooks/UserQueries';
 import { usePostQuery } from '@/hooks/PostQueries';
 import { userMapStore } from '@/hooks/userMapStore';
 
 const ViewPage = () => {
 
     const router = useRouter();
-    const id = router.query.id;
-
-    const { data: post, isLoading } = usePostQuery<Posts>(Number(id));
+    const id = router.query.id ? Number(router.query.id) : undefined;
+    const { data: post, isLoading } = usePostQuery<Posts>(id);
 
     return (
         <>
@@ -45,7 +43,6 @@ const ViewPage = () => {
 export default ViewPage
 
 export const UserCard = ({ id }: { id: number }) => {
-    // const { data: user, error } = useUserQuery<User>(id);
     const { user: data } = userMapStore();
     let user = data?.get(id)
     return (
