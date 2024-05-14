@@ -2,8 +2,9 @@ import Head from "next/head";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Posts, User } from "@/types";
-import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from "@mui/material";
-import Link from "next/link";
+import { Box, Stack } from "@mui/material";
+import { PostComponent } from "@/components/Features/PostComponent";
+import { PostListSkeleton } from "@/components/Skeleton";
 
 export default function Home() {
   const { data: posts, isLoading, error } = useQuery<Posts[]>({
@@ -25,8 +26,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Box >
+        <Box>
           <Stack maxWidth={300} mx={'auto'} spacing={2}>
+            {isLoading && <PostListSkeleton />}
             {
               users && posts?.map((p) => {
                 let user = users?.find((u) => u.id === p.userId)
@@ -38,27 +40,4 @@ export default function Home() {
       </main>
     </>
   );
-}
-
-
-export const PostComponent = ({ post, user }: { post: Posts, user?: User }) => {
-  return (
-    <Card variant="elevation">
-      {user && <Link href={`/user/${user.id}`}>
-        <CardHeader
-          avatar={
-            <Avatar alt={user?.name}>{user?.name[0]}</Avatar>
-          }
-          title={user.name}
-        />
-      </Link>}
-      <CardContent>
-        <Link href={`/post/${post.id}`}>
-          <Typography variant="body1" color="text.secondary">
-            {post.title}
-          </Typography>
-        </Link>
-      </CardContent>
-    </Card>
-  )
 }

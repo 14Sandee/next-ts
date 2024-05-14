@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
+import { ViewPostSkeleton } from '@/components/Skeleton';
 
 const ViewPage = () => {
     const router = useRouter();
@@ -18,9 +19,9 @@ const ViewPage = () => {
 
     return (
         <>
-            {isLoading && <p>loading...</p>}
             <Box>
                 <Stack maxWidth={300} mx={'auto'} spacing={2}>
+                    {isLoading && <ViewPostSkeleton />}
                     {post && <Card variant="elevation">
                         <CardContent>
                             <Stack spacing={2}>

@@ -1,8 +1,8 @@
+import { UserSkeleton } from '@/components/Skeleton';
 import { User } from '@/types';
 import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react'
 
@@ -18,10 +18,10 @@ const ViewUser = () => {
 
     return (
         <>
-            {isLoading && <p>loading...</p>}
-            {user && <Box>
+            <Box>
                 <Stack maxWidth={300} mx={'auto'} spacing={2}>
-                    <Card variant="elevation">
+                    {isLoading && <UserSkeleton />}
+                    {user && <Card variant="elevation">
                         <CardHeader
                             avatar={
                                 <Avatar alt={user?.name}>{user?.name[0]}</Avatar>
@@ -61,10 +61,9 @@ const ViewUser = () => {
                                 </Stack>
                             </Stack>
                         </CardContent>
-                    </Card>
+                    </Card>}
                 </Stack>
-            </Box>}
-
+            </Box>
         </>
 
     )
