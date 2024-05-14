@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export const PostComponent = ({ post, user }: { post: Posts, user?: User }) => {
     return (
-        <Grid item xs={3} >
+        <Grid item xs={12} md={3} >
             <Card variant="elevation" sx={{ height: '100%', borderRadius: 2 }}>
                 {user && <Link href={`/user/${user.id}`}>
                     <CardHeader

@@ -3,7 +3,7 @@ import React from 'react'
 
 export const PostListSkeleton = () => {
     return (
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
             <Card variant="elevation" sx={{ height: '100%', borderRadius: 2 }}>
                 <CardContent>
                     <Stack spacing={4}>

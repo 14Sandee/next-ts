@@ -28,7 +28,7 @@ export default function Home() {
       </Head>
       <main>
         <Box maxWidth={'lg'} mx={'auto'} py={4}>
-          <Typography variant='h1' fontWeight={500} fontSize={32}>Posts</Typography>
+          <Typography variant='h1' fontWeight={500} mb={2} fontSize={32}>Posts</Typography>
           <Grid container spacing={2}>
             {isLoading && [...Array(16)].map((e, index) => <PostListSkeleton key={index} />)}
             {
@@ -38,15 +38,6 @@ export default function Home() {
               })
             }
           </Grid>
-          {/* <Stack maxWidth={300} mx={'auto'} spacing={2}>
-            {isLoading && <PostListSkeleton />}
-            {
-              users && posts?.map((p) => {
-                const user = userMap.get(p.userId);
-                return <PostComponent key={p.id} post={p} user={user} />
-              })
-            }
-          </Stack> */}
         </Box>
       </main>
     </>
