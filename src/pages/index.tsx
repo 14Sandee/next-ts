@@ -1,20 +1,22 @@
 import Head from "next/head";
 import { Posts, User } from "@/types";
-import { Box, Stack } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { PostComponent } from "@/components/Features/PostComponent";
 import { PostListSkeleton } from "@/components/Skeleton";
 import { useAxiosGet } from "@/hooks/AxiosHooks";
 import { useUserQuery } from "@/hooks/UserQueries";
 import { usePostQuery } from "@/hooks/PostQueries";
+import { useMemo } from "react";
 
 export default function Home() {
 
   // const { data: posts, isLoading } = useAxiosGet<Posts[]>(['posts'], 'https://jsonplaceholder.typicode.com/posts')
   // const { data: users } = useAxiosGet<User[]>(['users'], 'https://jsonplaceholder.typicode.com/users')
 
-
   const { data: posts, isLoading } = usePostQuery<Posts[]>();
   const { data: users, error } = useUserQuery<User[]>();
+
+  const userMap = useMemo(() => new Map(users?.map(user => [user.id, user])), [users]);
 
   return (
     <>
@@ -25,16 +27,26 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Box>
-          <Stack maxWidth={300} mx={'auto'} spacing={2}>
-            {isLoading && <PostListSkeleton />}
+        <Box maxWidth={'lg'} mx={'auto'} py={4}>
+          <Typography variant='h1' fontWeight={500} fontSize={32}>Posts</Typography>
+          <Grid container spacing={2}>
+            {isLoading && [...Array(16)].map((e, index) => <PostListSkeleton key={index} />)}
             {
               users && posts?.map((p) => {
-                let user = users?.find((u) => u.id === p.userId)
+                const user = userMap.get(p.userId);
                 return <PostComponent key={p.id} post={p} user={user} />
               })
             }
-          </Stack>
+          </Grid>
+          {/* <Stack maxWidth={300} mx={'auto'} spacing={2}>
+            {isLoading && <PostListSkeleton />}
+            {
+              users && posts?.map((p) => {
+                const user = userMap.get(p.userId);
+                return <PostComponent key={p.id} post={p} user={user} />
+              })
+            }
+          </Stack> */}
         </Box>
       </main>
     </>

@@ -16,10 +16,10 @@ const ViewPage = () => {
 
     return (
         <>
-            <Box>
+            <Box py={4}>
                 <Stack maxWidth={300} mx={'auto'} spacing={2}>
                     {isLoading && <ViewPostSkeleton />}
-                    {post && <Card variant="elevation">
+                    {post && <Card sx={{ borderRadius: 2 }} variant="elevation">
                         <CardContent>
                             <Stack spacing={2}>
                                 <Typography variant="body1" color="text.primary">
@@ -46,7 +46,7 @@ export default ViewPage
 export const UserCard = ({ id }: { id: number }) => {
     const { data: user, error } = useUserQuery<User>(id);
     return (
-        <Card variant='elevation'>
+        <Card variant='elevation' sx={{ borderRadius: 2 }}>
             {user && <Link href={`/user/${user.id}`}>
                 <CardHeader
                     avatar={

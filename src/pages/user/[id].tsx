@@ -20,10 +20,10 @@ const ViewUser = () => {
 
     return (
         <>
-            <Box>
+            <Box py={4}>
                 <Stack maxWidth={300} mx={'auto'} spacing={2}>
                     {isLoading && <UserSkeleton />}
-                    {user && <Card variant="elevation">
+                    {user && <Card sx={{ borderRadius: 2 }} variant="elevation">
                         <CardHeader
                             avatar={
                                 <Avatar alt={user?.name}>{user?.name[0]}</Avatar>
