@@ -8,11 +8,12 @@ import Link from "next/link";
 export default function Home() {
   const { data: posts, isLoading, error } = useQuery<Posts[]>({
     queryKey: ['posts'],
-    queryFn: () => axios.get('https://jsonplaceholder.typicode.com/posts').then((res) => res.data)
+    queryFn: () => axios.get('https://jsonplaceholder.typicode.com/posts').then((res) => res.data),
   })
+
   const { data: users, isLoading: userLoading, error: userError } = useQuery<User[]>({
     queryKey: ['users'],
-    queryFn: () => axios.get('https://jsonplaceholder.typicode.com/users').then((res) => res.data)
+    queryFn: () => axios.get('https://jsonplaceholder.typicode.com/users').then((res) => res.data),
   })
 
   return (
@@ -40,7 +41,7 @@ export default function Home() {
 }
 
 
-const PostComponent = ({ post, user }: { post: Posts, user?: User }) => {
+export const PostComponent = ({ post, user }: { post: Posts, user?: User }) => {
   return (
     <Card variant="elevation">
       {user && <Link href={`/user/${user.id}`}>
