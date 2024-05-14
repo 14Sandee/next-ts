@@ -6,7 +6,8 @@ import { PostListSkeleton } from "@/components/Skeleton";
 import { useAxiosGet } from "@/hooks/AxiosHooks";
 import { useUserQuery } from "@/hooks/UserQueries";
 import { usePostQuery } from "@/hooks/PostQueries";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { userMapStore } from "@/hooks/userMapStore";
 
 export default function Home() {
 
@@ -16,7 +17,15 @@ export default function Home() {
   const { data: posts, isLoading } = usePostQuery<Posts[]>();
   const { data: users, error } = useUserQuery<User[]>();
 
+  const { updateUser } = userMapStore();
+
   const userMap = useMemo(() => new Map(users?.map(user => [user.id, user])), [users]);
+
+  useEffect(() => {
+
+    updateUser(userMap);
+
+  }, [userMap, updateUser])
 
   return (
     <>

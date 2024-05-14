@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ViewPostSkeleton } from '@/components/Skeleton';
 import { useUserQuery } from '@/hooks/UserQueries';
 import { usePostQuery } from '@/hooks/PostQueries';
+import { userMapStore } from '@/hooks/userMapStore';
 
 const ViewPage = () => {
 
@@ -44,7 +45,9 @@ const ViewPage = () => {
 export default ViewPage
 
 export const UserCard = ({ id }: { id: number }) => {
-    const { data: user, error } = useUserQuery<User>(id);
+    // const { data: user, error } = useUserQuery<User>(id);
+    const { user: data } = userMapStore();
+    let user = data?.get(id)
     return (
         <Card variant='elevation' sx={{ borderRadius: 2 }}>
             {user && <Link href={`/user/${user.id}`}>
