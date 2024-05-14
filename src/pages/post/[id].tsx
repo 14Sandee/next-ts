@@ -1,21 +1,18 @@
 import { Posts, User } from '@/types';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { ViewPostSkeleton } from '@/components/Skeleton';
+import { useUserQuery } from '@/hooks/UserQueries';
+import { usePostQuery } from '@/hooks/PostQueries';
 
 const ViewPage = () => {
+
     const router = useRouter();
     const id = router.query.id;
 
-    const { data: post, isLoading, error } = useQuery<Posts>({
-        queryKey: ['post', id],
-        queryFn: () => axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`).then((res) => res.data),
-        enabled: !!id
-    })
+    const { data: post, isLoading } = usePostQuery<Posts>(Number(id));
 
     return (
         <>
@@ -47,10 +44,7 @@ const ViewPage = () => {
 export default ViewPage
 
 export const UserCard = ({ id }: { id: number }) => {
-    const { data: user } = useQuery<User>({
-        queryKey: ['users', id],
-        queryFn: () => axios.get(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => res.data),
-    })
+    const { data: user, error } = useUserQuery<User>(id);
     return (
         <Card variant='elevation'>
             {user && <Link href={`/user/${user.id}`}>

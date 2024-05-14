@@ -1,21 +1,20 @@
 import Head from "next/head";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { Posts, User } from "@/types";
 import { Box, Stack } from "@mui/material";
 import { PostComponent } from "@/components/Features/PostComponent";
 import { PostListSkeleton } from "@/components/Skeleton";
+import { useAxiosGet } from "@/hooks/AxiosHooks";
+import { useUserQuery } from "@/hooks/UserQueries";
+import { usePostQuery } from "@/hooks/PostQueries";
 
 export default function Home() {
-  const { data: posts, isLoading, error } = useQuery<Posts[]>({
-    queryKey: ['posts'],
-    queryFn: () => axios.get('https://jsonplaceholder.typicode.com/posts').then((res) => res.data),
-  })
 
-  const { data: users, isLoading: userLoading, error: userError } = useQuery<User[]>({
-    queryKey: ['users'],
-    queryFn: () => axios.get('https://jsonplaceholder.typicode.com/users').then((res) => res.data),
-  })
+  // const { data: posts, isLoading } = useAxiosGet<Posts[]>(['posts'], 'https://jsonplaceholder.typicode.com/posts')
+  // const { data: users } = useAxiosGet<User[]>(['users'], 'https://jsonplaceholder.typicode.com/users')
+
+
+  const { data: posts, isLoading } = usePostQuery<Posts[]>();
+  const { data: users, error } = useUserQuery<User[]>();
 
   return (
     <>

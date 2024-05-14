@@ -1,4 +1,5 @@
 import { UserSkeleton } from '@/components/Skeleton';
+import { useUserQuery } from '@/hooks/UserQueries';
 import { User } from '@/types';
 import { Avatar, Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -9,12 +10,13 @@ import React from 'react'
 const ViewUser = () => {
     const router = useRouter();
     const id = router.query.id;
+    const { data: user, isLoading } = useUserQuery<User>(Number(id));
 
-    const { data: user, isLoading, error } = useQuery<User>({
-        queryKey: ['users', id],
-        queryFn: () => axios.get(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => res.data),
-        enabled: !!id
-    })
+    // const { data: user, isLoading, error } = useQuery<User>({
+    //     queryKey: ['users', id],
+    //     queryFn: () => axios.get(`https://jsonplaceholder.typicode.com/users/${id}`).then((res) => res.data),
+    //     enabled: !!id
+    // })
 
     return (
         <>
